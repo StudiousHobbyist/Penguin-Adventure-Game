@@ -145,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="budget.h" />
+    <ClInclude Include="custom_dirty.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="noise.h" />
     <ClInclude Include="thread.h" />
     <ClInclude Include="world.h" />
