@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Penguin Adventure Game/Penguin Adventure Game.vcxproj" />
+  <Project Path="Penguin Adventure Game/Penguin Adventure Game.vcxproj" Id="10c2bfc5-7d59-47ad-b197-82fbdf8984e0" />
 </Solution>
