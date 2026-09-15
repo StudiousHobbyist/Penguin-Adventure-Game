@@ -11,6 +11,8 @@
 
 #include "C:\Users\morga\Documents\VS Includes\raylib-6.0_win64_msvc16\include\raylib.h"
 
+
+
 //TODO: Move these constants to a config file or something. Clean up the code. Make it more readable. Add comments.
 
 const float TILESIZE = 16.0f;
@@ -80,16 +82,24 @@ struct ChunkPosHash
     }
 };
 
+// TODO: Ground layer, Wall Layer, Ceiling Layer
 struct Chunk {
-    std::array<Tile, CHUNKSIZE* CHUNKSIZE> rawdata{};
+    std::array<Tile, CHUNKSIZE * CHUNKSIZE> ground{};
+    std::array<Tile, CHUNKSIZE * CHUNKSIZE> wall{};
+    std::array<Tile, CHUNKSIZE * CHUNKSIZE> ceiling{};
+
     ChunkPos pos;
     RenderTexture2D texture;
     bool dirty = true;
 };
 
 struct GeneratedChunkData {
+    std::array<Tile, CHUNKSIZE* CHUNKSIZE> ground{};
+    std::array<Tile, CHUNKSIZE* CHUNKSIZE> wall{};
+    std::array<Tile, CHUNKSIZE* CHUNKSIZE> ceiling{};
+
     ChunkPos pos;
-    std::array<Tile, CHUNKSIZE* CHUNKSIZE> rawdata;
+    
 };
 
 class ChunkManager
@@ -154,7 +164,7 @@ public:
         {
             for (int x = 0; x < CHUNKSIZE; x++)
             {
-                Tile tile = chunk.rawdata[y * CHUNKSIZE + x];
+                Tile tile = chunk.ground[y * CHUNKSIZE + x];
                 TileProperties props = getTileProperties(tile);
 
                 // 1x1 pixel per tile instead of TILESIZE x TILESIZE
@@ -175,7 +185,7 @@ public:
                 int globalX = pos.x * CHUNKSIZE + x;
                 int globalY = pos.y * CHUNKSIZE + y;
                 float elevation = noise.SampleElevation(globalX, globalY);
-                chunk.rawdata[x + CHUNKSIZE * y] = getTileFromElevation(elevation);
+                chunk.ground[x + CHUNKSIZE * y] = getTileFromElevation(elevation);
             }
         }
 
@@ -286,7 +296,7 @@ public:
                             (float)globalY
                         );
 
-                    data.rawdata[x + CHUNKSIZE * y] =
+                    data.ground[x + CHUNKSIZE * y] =
                         getTileFromElevation(elevation);
                 }
             }
@@ -401,7 +411,9 @@ public:
 
             Chunk chunk;
             chunk.pos = data.pos;
-            chunk.rawdata = data.rawdata;
+            chunk.ground = data.ground;
+            chunk.wall = data.wall;
+            chunk.ceiling = data.ceiling;
             chunk.dirty = true;
 
             BuildChunkTexture(chunk);

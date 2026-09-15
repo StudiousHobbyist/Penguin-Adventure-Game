@@ -1,3 +1,4 @@
+// log.h
 #pragma once
 
 #include <iostream>
@@ -38,6 +39,7 @@ class Logger {
 private:
     std::vector<std::string> logs;
     bool bloatEnabled = true;
+	bool printToConsole = false;
 public:
     void log(LogLevel lvl, std::string msg) {
 
@@ -45,22 +47,22 @@ public:
 
         switch (lvl) {
         case LogLevel::INFO:
-            std::cout << now << " [INFO] " << msg << std::endl;
+            if (printToConsole) std::cout << now << " [INFO] " << msg << std::endl;
             logs.push_back(now + " [INFO] " + msg);
             break;
         case LogLevel::WARNING:
-            std::cout << now << TerminalColors().yellow << " [WARNING] " << msg << TerminalColors().reset << std::endl;
+            if (printToConsole) std::cout << now << TerminalColors().yellow << " [WARNING] " << msg << TerminalColors().reset << std::endl;
             logs.push_back(now + TerminalColors().yellow + " [WARN] " + msg + TerminalColors().reset);
             break;
         case LogLevel::ERROR:
-            std::cout << now << TerminalColors().red << " [ERROR] " << msg << TerminalColors().reset << std::endl;
+            if (printToConsole) std::cout << now << TerminalColors().red << " [ERROR] " << msg << TerminalColors().reset << std::endl;
             logs.push_back(now + TerminalColors().red + " [ERR] " + msg + TerminalColors().reset);
 
             break;
 
         case LogLevel::BLOAT:
             if (bloatEnabled) {
-                std::cout << now << TerminalColors().blue << " [BLOAT] " << msg << TerminalColors().reset << std::endl;
+                if (printToConsole) std::cout << now << TerminalColors().blue << " [BLOAT] " << msg << TerminalColors().reset << std::endl;
                 logs.push_back(now + TerminalColors().blue + " [BLOAT] " + msg + TerminalColors().reset);
             }
             break;
@@ -75,3 +77,5 @@ public:
         }
     }
 };
+
+Logger logger{};

@@ -56,6 +56,7 @@ public:
         if (v < 0) v += d;
         return v;
     }
+	// TODO: have it return ground, wall, and ceiling tiles instead of just ground tiles
     Tile GetTileAtWorldPosition(ChunkManager& cm, float x, float y)
     {
         float chunkPixels = CHUNKSIZE * TILESIZE;
@@ -80,7 +81,7 @@ public:
             tileY < 0 || tileY >= CHUNKSIZE)
             return Tile::Null;
 
-        return chunk->rawdata[tileX + CHUNKSIZE * tileY];
+        return chunk->ground[tileX + CHUNKSIZE * tileY];
     }
 
     std::vector<Tile> getTile(ChunkManager& cm)

@@ -4,18 +4,7 @@
 #include "C:\Users\morga\Documents\VS Includes\raylib-6.0_win64_msvc16\include\raylib.h"
 
 
-Vector2 Normalize(Vector2 v)
-{
-    float length = std::sqrt(v.x * v.x + v.y * v.y);
 
-    if (length == 0.0f)
-        return { 0, 0 };
-
-    return {
-        v.x / length,
-        v.y / length
-    };
-}
 
 struct ProgressBar {
     int width;
